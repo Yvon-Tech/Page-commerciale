@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBF6EC">
+<title>Pack Digital Cotonou — Menu QR & Site Hôtel sans commission</title>
+<meta name="description" content="Deux démos prêtes à vendre : Menu QR restaurant (resto-demo-yvon.vercel.app) et Site hôtel (hotel-demo-yvon.vercel.app). Sans app, sans abonnement. Cotonou, Bénin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF6EC;--bg-2:#F4EAD8;--bg-3:#FFF3E0;--bg-4:#E8EFE9;
+  --ink:#123B2A;--ink-2:#1E5C40;--ink-soft:rgba(18,59,42,.68);--ink-mute:rgba(18,59,42,.48);
+  --terra:#D2541E;--terra-2:#A83F11;--terra-soft:#FCE6D8;
+  --forest:#123B2A;--forest-2:#1E5C40;--forest-soft:#DCEBE0;
+  --gold:#EBA93A;--gold-2:#C98A1E;--gold-soft:#FDF0D2;
+  --line:rgba(18,59,42,.10);--line-strong:rgba(18,59,42,.18);
+  --card:#FFFFFF;--radius:24px;--radius-lg:28px;--radius-sm:16px;
+  --shadow-sm:0 1px 2px rgba(18,59,42,.05),0 8px 22px -14px rgba(18,59,42,.20);
+  --shadow-md:0 18px 40px -22px rgba(18,59,42,.28),0 6px 14px -8px rgba(18,59,42,.10);
+  --shadow-lg:0 40px 80px -30px rgba(18,59,42,.35),0 12px 28px -14px rgba(18,59,42,.15);
+  --ease:cubic-bezier(.22,.72,.28,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --nav-h:72px;--safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 20px + var(--safe-top));-webkit-text-size-adjust:100%}
+body{margin:0;font-family:'DM Sans',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body.no-scroll{overflow:hidden}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+a{color:inherit;text-decoration:none}
+ul,ol{margin:0;padding:0;list-style:none}
+h1,h2,h3,h4,p{margin:0}
+:focus-visible{outline:2.5px solid var(--terra);outline-offset:3px;border-radius:8px}
+::selection{background:var(--forest);color:var(--bg)}
+.fraunces{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto}
+.wrap{width:min(1280px,100% - 40px);margin-inline:auto}
+@media (max-width:640px){.wrap{width:min(1280px,100% - 28px)}}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+.eyebrow::before{content:"";width:26px;height:1.5px;background:currentColor;opacity:.5}
+.section{padding:clamp(72px,10vw,120px) 0;position:relative}
+.section--tight{padding:clamp(56px,7vw,80px) 0}
+.section__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:52px}
+.section__title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.8rem,4.6vw,3rem);line-height:1.02;letter-spacing:-.025em;margin-top:14px;max-width:20ch}
+.section__title em{font-style:italic;color:var(--terra)}
+.section__lede{max-width:42ch;font-size:15px;color:var(--ink-soft);line-height:1.55}
+.grain{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.04;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E")}
+.progress{position:fixed;top:0;left:0;right:0;height:2.5px;z-index:9999;pointer-events:none}
+.progress__bar{height:100%;width:0;background:linear-gradient(90deg,var(--terra),var(--gold));transition:width .1s linear;box-shadow:0 0 12px rgba(235,169,58,.6)}
+.header{position:fixed;top:0;left:0;right:0;z-index:900;padding-top:var(--safe-top);transition:background .4s var(--ease),backdrop-filter .4s var(--ease)}
+.header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--line);opacity:0;transition:opacity .4s var(--ease)}
+.header.scrolled{background:rgba(251,246,236,.82);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5)}
+.header.scrolled::after{opacity:1}
+.nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand__mark{width:40px;height:40px;flex:none;border-radius:50%;background:var(--forest);color:var(--bg);display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:700;font-size:19px;letter-spacing:-.02em;transition:transform .5s var(--ease);box-shadow:0 8px 20px -10px rgba(18,59,42,.55)}
+.brand:hover .brand__mark{transform:rotate(-8deg) scale(1.06)}
+.brand__text{display:flex;flex-direction:column;line-height:1}
+.brand__name{font-family:'Fraunces',serif;font-weight:700;font-size:16px;letter-spacing:-.01em}
+.brand__loc{font-size:9.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);margin-top:4px}
+.nav__links{display:none;gap:4px;align-items:center}
+@media (min-width:1000px){.nav__links{display:flex}}
+.nav__link{position:relative;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:600;color:var(--ink-soft);transition:color .25s var(--ease),background .25s var(--ease)}
+.nav__link::after{content:"";position:absolute;left:50%;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--gold);transform:translateX(-50%) scale(0);transition:transform .3s var(--ease)}
+.nav__link:hover{color:var(--ink);background:rgba(18,59,42,.05)}
+.nav__link.active{color:var(--ink)}
+.nav__link.active::after{transform:translateX(-50%) scale(1)}
+.nav__cta{display:none;align-items:center;gap:9px;height:44px;padding:0 18px;border-radius:999px;background:var(--forest);color:var(--bg);font-size:13px;font-weight:700;box-shadow:0 10px 24px -12px rgba(18,59,42,.55);transition:transform .3s var(--ease),background .3s var(--ease)}
+@media (min-width:1000px){.nav__cta{display:inline-flex}}
+.nav__cta:hover{background:#000;transform:translateY(-2px)}
+.nav__cta svg{width:15px;height:15px;transition:transform .3s var(--ease)}
+.nav__cta:hover svg{transform:translate(2px,-2px)}
+.nav__burger{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);transition:background .3s var(--ease)}
+.nav__burger:hover{background:rgba(18,59,42,.05)}
+@media (min-width:1000px){.nav__burger{display:none}}
+.mobile-menu{position:fixed;inset:0;z-index:950;background:var(--bg);padding-top:calc(var(--nav-h) + var(--safe-top) + 20px);opacity:0;pointer-events:none;transform:translateY(-8px);transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.mobile-menu.open{opacity:1;pointer-events:auto;transform:none}
+.mobile-menu__inner{padding:24px}
+.mobile-menu__link{display:block;padding:20px 4px;border-bottom:1px solid var(--line);font-family:'Fraunces',serif;font-size:24px;font-weight:600;letter-spacing:-.02em;transition:padding-left .3s var(--ease),color .3s var(--ease)}
+.mobile-menu__link:hover{padding-left:12px;color:var(--gold-2)}
+.mobile-menu__cta{margin-top:28px;height:56px;border-radius:999px;background:var(--forest);color:var(--bg);display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:15px}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;font-weight:700;font-size:14.5px;letter-spacing:-.005em;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease);will-change:transform}
+.btn svg{width:17px;height:17px;flex:none;transition:transform .35s var(--ease)}
+.btn:hover svg{transform:translate(2px,-2px)}
+.btn--primary{background:var(--forest);color:var(--bg);box-shadow:0 14px 30px -14px rgba(18,59,42,.75)}
+.btn--primary:hover{background:#000;transform:translateY(-2px);box-shadow:0 22px 40px -16px rgba(18,59,42,.9)}
+.btn--terra{background:var(--terra);color:#fff;box-shadow:0 14px 30px -14px rgba(210,84,30,.75)}
+.btn--terra:hover{background:var(--terra-2);transform:translateY(-2px)}
+.btn--gold{background:var(--gold);color:var(--ink);box-shadow:0 14px 30px -14px rgba(235,169,58,.85)}
+.btn--gold:hover{background:var(--gold-2);transform:translateY(-2px)}
+.btn--ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line-strong)}
+.btn--ghost:hover{background:var(--bg-2);transform:translateY(-2px)}
+.btn--wa{background:#1FA855;color:#fff;box-shadow:0 14px 30px -14px rgba(31,168,85,.75)}
+.btn--wa:hover{background:#189247;transform:translateY(-2px)}
+.btn:active{transform:scale(.97) !important}
+.btn--block{width:100%}
+.ripple{position:absolute;border-radius:50%;pointer-events:none;background:rgba(255,255,255,.45);transform:scale(0);animation:rippleOut .7s var(--ease-out) forwards}
+.btn--gold .ripple,.btn--ghost .ripple{background:rgba(18,59,42,.18)}
+@keyframes rippleOut{to{transform:scale(3);opacity:0}}
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out);transition-delay:var(--d,0s)}
+[data-reveal].in{opacity:1;transform:none}
+.hero{position:relative;padding:calc(var(--nav-h) + var(--safe-top) + 40px) 0 0;overflow:hidden;isolation:isolate}
+.hero__bg{position:absolute;inset:0;z-index:-2;background:radial-gradient(110% 70% at 82% 10%,#FFE3B8 0%,transparent 55%),radial-gradient(80% 60% at 8% 90%,#F2D9BC 0%,transparent 60%),linear-gradient(180deg,#FDF8EF 0%,#FBF6EC 55%,#F4E7D2 100%)}
+.hero__grid{display:grid;grid-template-columns:1fr;gap:32px;align-items:center}
+@media (min-width:1000px){.hero__grid{grid-template-columns:1.15fr .85fr;gap:56px}}
+.hero__pill{display:inline-flex;align-items:center;gap:9px;padding:8px 15px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);box-shadow:0 6px 16px -12px rgba(18,59,42,.4)}
+.hero__pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--terra);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+.hero h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.4rem,6.5vw,4.4rem);line-height:.95;letter-spacing:-.03em;margin-top:26px}
+.hero h1 em{font-style:italic;color:var(--terra);position:relative}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.05em;height:.08em;background:var(--gold);border-radius:4px;transform:scaleX(0);transform-origin:left;animation:underline 1s var(--ease-out) .8s forwards}
+@keyframes underline{to{transform:scaleX(1)}}
+.hero__sub{margin-top:24px;font-size:clamp(1rem,2vw,1.18rem);font-weight:500;color:var(--ink-soft);max-width:46ch;line-height:1.55}
+.hero__actions{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px}
+.hero__badges{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px 22px;font-size:13px;font-weight:600;color:var(--ink-soft)}
+.hero__badges span{display:inline-flex;align-items:center;gap:7px}
+.hero__badges svg{width:15px;height:15px;color:var(--terra);flex:none}
+.hero__visual{position:relative}
+.hero__card{border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);padding:12px;box-shadow:var(--shadow-lg)}
+.hero__preview{position:relative;border-radius:20px;overflow:hidden;background:var(--bg-2);aspect-ratio:4 / 3.1}
+.hero__preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero__preview::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.4) 100%)}
+.hero__notif{position:absolute;left:14px;right:14px;bottom:14px;z-index:2;display:flex;gap:10px;align-items:center}
+.hero__notif-card{flex:1;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 12px 30px -14px rgba(0,0,0,.35)}
+.hero__notif-k{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+.hero__notif-line{font-size:13px;font-weight:700;margin-top:4px;color:var(--ink)}
+.hero__notif-meta{font-size:11px;color:var(--ink-soft);margin-top:2px}
+.hero__notif-ico{width:48px;height:48px;flex:none;border-radius:16px;background:var(--forest);color:var(--bg);display:grid;place-items:center;box-shadow:0 12px 24px -12px rgba(18,59,42,.55)}
+.hero__notif-ico svg{width:20px;height:20px}
+.hero__facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.hero__fact{border-radius:16px;background:var(--bg);border:1px solid var(--line);padding:14px 10px;text-align:center}
+.hero__fact-k{font-size:9.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+.hero__fact-v{font-family:'Fraunces',serif;font-weight:600;font-size:15px;letter-spacing:-.02em;margin-top:5px}
+.hero__float{position:absolute;top:-24px;right:-24px;width:112px;height:112px;border-radius:50%;background:var(--gold-soft);border:1px solid var(--gold);display:none;flex-direction:column;align-items:center;justify-content:center;transform:rotate(8deg);animation:floaty 6s ease-in-out infinite;box-shadow:var(--shadow-md);z-index:3}
+@media (min-width:1000px){.hero__float{display:flex}}
+.hero__float b{font-family:'Fraunces',serif;font-weight:700;font-size:15px;letter-spacing:-.02em}
+.hero__float span{font-size:9.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2px}
+@keyframes floaty{0%,100%{transform:rotate(8deg) translateY(0)}50%{transform:rotate(6deg) translateY(-10px)}}
+.demos{display:grid;gap:22px;grid-template-columns:1fr}
+@media (min-width:960px){.demos{grid-template-columns:1fr 1fr;gap:26px}}
+.demo{position:relative;display:flex;flex-direction:column;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease)}
+.demo:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(210,84,30,.28)}
+.demo__media{position:relative;aspect-ratio:16/11;overflow:hidden;background:var(--bg-2)}
+@media (min-width:960px){.demo__media{aspect-ratio:16/10}}
+.demo__media img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.demo:hover .demo__media img{transform:scale(1.06)}
+.demo__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(18,59,42,.78) 100%)}
+.demo__tags{position:absolute;top:16px;left:16px;right:16px;z-index:2;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:flex-start}
+.demo__tag{padding:7px 13px;border-radius:999px;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.demo__tag--gold{background:var(--gold);color:var(--ink)}
+.demo__tag--cream{background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--ink)}
+.demo__tag--forest{background:var(--forest);color:#fff}
+.demo__tag--terra{background:var(--terra);color:#fff}
+.demo__caption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:24px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.demo__caption-text{color:#FBF6EC;min-width:0}
+.demo__caption h3{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.5rem,2.6vw,1.9rem);line-height:1.05;letter-spacing:-.02em}
+.demo__caption p{margin-top:8px;font-size:13px;color:rgba(251,246,236,.8);line-height:1.45;max-width:42ch}
+.demo__qr{width:76px;height:76px;flex:none;border-radius:16px;background:#fff;padding:8px;display:grid;place-items:center;box-shadow:0 12px 26px -12px rgba(0,0,0,.5)}
+.demo__qr svg{width:100%;height:100%;color:var(--ink)}
+.demo__body{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1}
+.demo__feature-tags{display:flex;flex-wrap:wrap;gap:6px}
+.demo__feature-tag{padding:5px 11px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:11px;font-weight:600;color:var(--ink-2)}
+.demo__url{display:flex;align-items:center;gap:8px;margin-top:16px;padding:10px 14px;border-radius:12px;background:var(--bg);border:1px dashed var(--line-strong);font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:var(--ink-2);word-break:break-all}
+.demo__url svg{width:14px;height:14px;flex:none;color:var(--terra)}
+.demo__foot{margin-top:20px;padding-top:22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.demo__foot-info{font-size:12px;line-height:1.4;color:var(--ink-mute)}
+.demo__foot-info strong{color:var(--ink);font-weight:700}
+.demo__btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:999px;background:var(--forest);color:var(--bg);font-size:13px;font-weight:700;transition:transform .3s var(--ease),background .3s var(--ease)}
+.demo__btn:hover{background:#000;transform:translateY(-2px)}
+.demo__btn svg{width:14px;height:14px;transition:transform .3s var(--ease)}
+.demo__btn:hover svg{transform:translate(2px,-2px)}
+.hotel-strip{margin-top:32px;border-radius:var(--radius);background:var(--forest);color:#FBF6EC;padding:36px 32px;display:grid;gap:32px;grid-template-columns:1fr;position:relative;overflow:hidden}
+@media (min-width:960px){.hotel-strip{grid-template-columns:1.1fr .9fr;padding:44px;gap:56px;align-items:center}}
+.hotel-strip::before{content:"";position:absolute;right:-100px;top:-100px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(235,169,58,.22),transparent 70%)}
+.hotel-strip > *{position:relative;z-index:1}
+.hotel-strip__eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.hotel-strip__eyebrow svg{width:14px;height:14px}
+.hotel-strip__rooms{margin-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:640px){.hotel-strip__rooms{grid-template-columns:1fr}}
+.hotel-room{border-radius:18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);padding:18px}
+.hotel-room__name{font-size:12.5px;font-weight:700;letter-spacing:-.005em}
+.hotel-room__price{font-family:'Fraunces',serif;font-weight:600;font-size:18px;margin-top:6px;letter-spacing:-.02em}
+.hotel-room__unit{font-size:11px;color:rgba(251,246,236,.6);margin-top:2px}
+.hotel-strip__text{font-size:14px;line-height:1.6;color:rgba(251,246,236,.8)}
+.hotel-strip__text code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.08);color:var(--gold)}
+.hotel-strip__links{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px}
+.hotel-strip__link{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);font-size:12.5px;font-weight:700;color:#FBF6EC;transition:transform .3s var(--ease),background .3s var(--ease)}
+.hotel-strip__link:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
+.hotel-strip__link svg{width:14px;height:14px;color:var(--gold);flex:none}
+.pricing{display:grid;gap:22px;grid-template-columns:1fr}
+@media (min-width:960px){.pricing{grid-template-columns:repeat(3,1fr)}}
+.price-card{position:relative;display:flex;flex-direction:column;padding:32px 28px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-sm);transition:transform .4s var(--ease),box-shadow .4s var(--ease);overflow:hidden}
+.price-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.price-card--featured{background:var(--forest);color:#FBF6EC;border-color:var(--forest);box-shadow:var(--shadow-lg)}
+.price-card--featured::before{content:"";position:absolute;right:-80px;top:-80px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(210,84,30,.32),transparent 70%)}
+.price-card--featured > *{position:relative;z-index:1}
+.price-card__head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.price-card__ico{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--bg-2);border:1px solid var(--line);color:var(--ink)}
+.price-card--featured .price-card__ico{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.12);color:#FBF6EC}
+.price-card__ico svg{width:19px;height:19px}
+.price-card__badge{padding:6px 12px;border-radius:999px;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.price-card__badge--grey{background:var(--bg-2);color:var(--ink)}
+.price-card__badge--gold{background:var(--gold);color:var(--ink)}
+.price-card__badge--terra{background:var(--terra);color:#fff}
+.price-card__title{font-family:'Fraunces',serif;font-weight:600;font-size:22px;letter-spacing:-.02em;margin-top:22px}
+.price-card__price{margin-top:14px;display:flex;align-items:baseline;gap:10px}
+.price-card__price b{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2rem,3.4vw,2.5rem);letter-spacing:-.03em;line-height:1}
+.price-card__price span{font-size:12.5px;color:var(--ink-mute)}
+.price-card--featured .price-card__price span{color:rgba(251,246,236,.7)}
+.price-card__list{margin-top:24px;display:flex;flex-direction:column;gap:12px;font-size:13.8px;line-height:1.4}
+.price-card__list li{display:flex;gap:10px;align-items:flex-start}
+.price-card__list svg{width:16px;height:16px;flex:none;margin-top:2px;color:var(--terra)}
+.price-card--featured .price-card__list svg{color:var(--gold)}
+.price-card__list li.off{opacity:.45}
+.price-card__list li.off svg{color:var(--ink-mute)}
+.price-card__cta{margin-top:28px}
+.note-strip{margin-top:32px;display:flex;gap:16px;align-items:flex-start;padding:22px 24px;border-radius:18px;background:var(--card);border:1px dashed var(--line-strong)}
+.note-strip__ico{width:42px;height:42px;flex:none;border-radius:50%;background:var(--gold-soft);color:var(--forest);display:grid;place-items:center}
+.note-strip__ico svg{width:18px;height:18px}
+.note-strip__text{font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
+.note-strip__text strong{color:var(--ink);font-weight:700}
+.process{border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);padding:36px 32px;box-shadow:var(--shadow-sm)}
+@media (min-width:960px){.process{padding:44px 40px}}
+.process__head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:flex-end}
+.process__head h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.6rem,3.4vw,2.2rem);line-height:1;letter-spacing:-.025em;max-width:22ch}
+.process__badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.process__badge svg{width:14px;height:14px}
+.process__grid{margin-top:36px;display:grid;gap:18px;grid-template-columns:1fr}
+@media (min-width:760px){.process__grid{grid-template-columns:repeat(3,1fr)}}
+.process__step{border-radius:20px;background:var(--bg);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.process__step:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.process__step-top{display:flex;align-items:center;justify-content:space-between}
+.process__num{font-family:'Fraunces',serif;font-weight:700;font-size:42px;line-height:1;letter-spacing:-.04em;opacity:.14}
+.process__ico{width:40px;height:40px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center}
+.process__ico svg{width:18px;height:18px}
+.process__step h4{font-family:'Fraunces',serif;font-weight:600;font-size:17px;line-height:1.15;letter-spacing:-.01em;margin-top:16px}
+.process__step p{font-size:13px;line-height:1.55;color:var(--ink-soft);margin-top:10px}
+.footer{margin-top:clamp(80px,10vw,120px);background:var(--card);border-top:1px solid var(--line);padding:64px 0 calc(40px + var(--safe-bot))}
+.footer__grid{display:grid;gap:44px;grid-template-columns:1fr}
+@media (min-width:860px){.footer__grid{grid-template-columns:1.25fr .75fr;gap:60px}}
+.footer__brand{display:flex;align-items:center;gap:12px}
+.footer__brand-name{font-family:'Fraunces',serif;font-weight:700;font-size:17px;letter-spacing:-.01em;line-height:1.15}
+.footer__tag{margin-top:20px;font-size:14px;line-height:1.65;color:var(--ink-soft);max-width:44ch}
+.footer__chips{margin-top:24px;display:flex;flex-wrap:wrap;gap:8px}
+.footer__chip{padding:7px 13px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.footer__chip--forest{background:var(--forest);color:var(--bg);border-color:var(--forest)}
+.footer__demos{margin-top:28px;padding:20px;border-radius:18px;background:var(--bg);border:1px solid var(--line)}
+.footer__demos-k{font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute)}
+.footer__demos-list{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.footer__demo-row{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:12.5px;transition:transform .3s var(--ease),border-color .3s var(--ease)}
+.footer__demo-row:hover{transform:translateY(-2px);border-color:var(--terra)}
+.footer__demo-row svg:first-child{width:14px;height:14px;flex:none;color:var(--terra)}
+.footer__demo-row span{flex:1;min-width:0;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.footer__demo-row svg:last-child{width:13px;height:13px;color:var(--ink-mute);flex:none}
+.footer__card{border-radius:20px;background:var(--bg);border:1px solid var(--line);padding:22px}
+.footer__card-k{font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute)}
+.footer__card-phone{margin-top:12px;font-family:'Fraunces',serif;font-weight:700;font-size:19px;letter-spacing:-.02em}
+.footer__card-meta{margin-top:6px;font-size:12.5px;color:var(--ink-soft)}
+.footer__actions{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:420px){.footer__actions{grid-template-columns:1fr}}
+.footer__action{height:44px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:12.5px;font-weight:700;transition:transform .3s var(--ease),background .3s var(--ease)}
+.footer__action--primary{background:var(--forest);color:var(--bg)}
+.footer__action--primary:hover{background:#000;transform:translateY(-2px)}
+.footer__action--ghost{background:var(--card);border:1px solid var(--line);color:var(--ink)}
+.footer__action--ghost:hover{background:var(--bg-2);transform:translateY(-2px)}
+.footer__action svg{width:13px;height:13px}
+.footer__tokens{margin-top:20px;font-size:11px;line-height:1.6;color:var(--ink-mute)}
+.footer__tokens code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;padding:2px 5px;border-radius:5px;background:var(--bg-2);color:var(--ink)}
+.footer__rule{margin-top:44px;height:1px;background:var(--line)}
+.footer__bottom{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;font-size:11.5px;color:var(--ink-mute)}
+.footer__bottom a{display:inline-flex;align-items:center;gap:6px;transition:color .3s var(--ease)}
+.footer__bottom a:hover{color:var(--terra)}
+.footer__bottom svg{width:12px;height:12px}
+.mobile-cta{position:fixed;left:14px;right:14px;bottom:calc(14px + var(--safe-bot));z-index:800;max-width:520px;margin-inline:auto;transform:translateY(140%);transition:transform .5s var(--ease-out)}
+.mobile-cta.show{transform:none}
+@media (min-width:1000px){.mobile-cta{display:none}}
+.mobile-cta__btn{width:100%;min-height:56px;border-radius:999px;background:var(--forest);color:var(--bg);display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:15px;box-shadow:0 20px 40px -16px rgba(18,59,42,.7);transition:transform .3s var(--ease)}
+.mobile-cta__btn:active{transform:scale(.97)}
+.mobile-cta__btn svg{width:18px;height:18px}
+.toast{position:fixed;left:50%;bottom:calc(90px + var(--safe-bot));z-index:960;transform:translate(-50%,20px);max-width:min(420px,calc(100vw - 32px));padding:13px 20px;border-radius:14px;background:var(--forest);color:var(--bg);font-size:13.5px;font-weight:600;text-align:center;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:opacity .35s var(--ease),transform .35s var(--ease-out)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+  [data-reveal]{opacity:1 !important;transform:none !important}
+  .hero__float{animation:none !important}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
+
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="Pack Digital Cotonou — Accueil">
+      <span class="brand__mark">M</span>
+      <span class="brand__text">
+        <span class="brand__name">Menu &amp; Hôtel</span>
+        <span class="brand__loc">Cotonou · Pack Digital</span>
+      </span>
+    </a>
+
+    <nav class="nav__links" aria-label="Navigation principale">
+      <a class="nav__link" href="#demos" data-nav="demos">Démos</a>
+      <a class="nav__link" href="#offres" data-nav="offres">Offres &amp; Prix</a>
+      <a class="nav__link" href="#process" data-nav="process">Process</a>
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:10px">
+      <a class="nav__cta" id="headerWaBtn" href="#" target="_blank" rel="noopener noreferrer">
+        WhatsApp direct
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+        </svg>
+      </a>
+      <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <line x1="4" x2="20" y1="6" y2="6"/>
+          <line x1="4" x2="20" y1="12" y2="12"/>
+          <line x1="4" x2="20" y1="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" hidden>
+  <div class="mobile-menu__inner">
+    <a class="mobile-menu__link" href="#demos">Démos live</a>
+    <a class="mobile-menu__link" href="#offres">Offres &amp; Prix</a>
+    <a class="mobile-menu__link" href="#process">Comment ça marche</a>
+    <a class="mobile-menu__cta" id="mobileWaBtn" href="#" target="_blank" rel="noopener noreferrer">
+      Écrire sur WhatsApp
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true"></div>
+
+    <div class="wrap hero__grid">
+
+      <div>
+        <span class="hero__pill">Sans app · Sans abonnement mensuel</span>
+
+        <h1>
+          Vos clients commandent<br>
+          depuis leur téléphone.<br>
+          <em>Vous recevez sur WhatsApp.</em>
+        </h1>
+
+        <p class="hero__sub">
+          Deux solutions prêtes, testées, hébergées gratuitement sur Vercel.
+          Aucune application à installer, aucun abonnement mensuel, zéro commission Booking.
+        </p>
+
+        <div class="hero__actions">
+          <a href="https://resto-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8"/>
+              <path d="M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7"/>
+            </svg>
+            Voir la démo restaurant
+          </a>
+          <a href="https://hotel-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 22v-6.57"/><path d="M12 11h.01"/><path d="M12 7h.01"/>
+              <path d="M14 15.43V22"/><path d="M15 16a5 5 0 0 0-6 0"/>
+              <path d="M16 11h.01"/><path d="M16 7h.01"/><path d="M8 11h.01"/><path d="M8 7h.01"/>
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+            </svg>
+            Voir la démo hôtel
+          </a>
+        </div>
+
+        <div class="hero__badges">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            QR code inclus
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Paiement sur place
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Hébergement Vercel
+          </span>
+        </div>
+      </div>
+
+      <div class="hero__visual" data-reveal style="--d:.2s">
+        <div class="hero__float">
+          <span>Vercel</span>
+          <b>Gratuit</b>
+        </div>
+
+        <div class="hero__card">
+          <div class="hero__preview">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop" alt="Restaurant à Cotonou — aperçu démo" loading="eager">
+
+            <div class="hero__notif">
+              <div class="hero__notif-card">
+                <div class="hero__notif-k">Commande reçue</div>
+                <div class="hero__notif-line">Poulet braisé ×2 + Bissap</div>
+                <div class="hero__notif-meta">Table 4 · +229 97…</div>
+              </div>
+              <div class="hero__notif-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero__facts">
+            <div class="hero__fact">
+              <div class="hero__fact-k">Scan</div>
+              <div class="hero__fact-v">QR → Menu</div>
+            </div>
+            <div class="hero__fact">
+              <div class="hero__fact-k">Commande</div>
+              <div class="hero__fact-v">WhatsApp</div>
+            </div>
+            <div class="hero__fact">
+              <div class="hero__fact-k">Coût</div>
+              <div class="hero__fact-v">0 F/mois</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DÉMOS -->
+  <section class="section" id="demos">
+    <div class="wrap">
+      <div class="section__head" data-reveal>
+        <div>
+          <span class="eyebrow" style="color:var(--terra)">Deux démos live</span>
+          <h2 class="section__title">Prêtes à vendre.<br>Cliquez, c'est ouvert.</h2>
+        </div>
+        <p class="section__lede">
+          Même base technique : HTML/CSS/JS statique, hébergé sur Vercel. Pas de WordPress, pas de plugin qui casse. Les liens sont réels — vous pouvez les ouvrir tout de suite.
+        </p>
+      </div>
+
+      <div class="demos">
+
+        <!-- RESTAURANT -->
+        <article class="demo" id="demo-resto" data-reveal>
+          <div class="demo__media">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1400&auto=format&fit=crop" alt="Le Baobab Gourmand — Restaurant Cotonou" loading="lazy">
+            <div class="demo__tags">
+              <span class="demo__tag demo__tag--gold">Best-seller</span>
+              <span class="demo__tag demo__tag--cream">QR · Panier · WhatsApp</span>
+            </div>
+            <div class="demo__caption">
+              <div class="demo__caption-text">
+                <h3>Le Baobab Gourmand</h3>
+                <p>Menu QR · Catégories · Panier FCFA · Commande WhatsApp · Prix Cotonou</p>
+              </div>
+              <div class="demo__qr" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/>
+                  <rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
+                  <path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/>
+                  <path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/>
+                  <path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo__body">
+            <div class="demo__feature-tags">
+              <span class="demo__feature-tag">Menu QR instantané</span>
+              <span class="demo__feature-tag">Catégories filtres</span>
+              <span class="demo__feature-tag">Panier FCFA</span>
+              <span class="demo__feature-tag">Commande WhatsApp pré-remplie</span>
+              <span class="demo__feature-tag">QR code table</span>
+            </div>
+
+            <a class="demo__url" href="https://resto-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir resto-demo-yvon.vercel.app">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              resto-demo-yvon.vercel.app
+            </a>
+
+            <div class="demo__foot">
+              <div class="demo__foot-info">
+                <strong>Stack :</strong> HTML/CSS/JS statique<br>
+                Hébergement Vercel gratuit
+              </div>
+              <a class="demo__btn" href="https://resto-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir la démo restaurant dans un nouvel onglet">
+                Ouvrir la démo
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- HOTEL -->
+        <article class="demo" id="demo-hotel" data-reveal style="--d:.1s">
+          <div class="demo__media">
+            <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1400&auto=format&fit=crop" alt="Villa Cauris — Hôtel Cotonou" loading="lazy">
+            <div class="demo__tags">
+              <span class="demo__tag demo__tag--cream">Sans BDD · 0 coût/mois</span>
+              <span class="demo__tag demo__tag--forest">25k / 40k / 75k F</span>
+            </div>
+            <div class="demo__caption">
+              <div class="demo__caption-text">
+                <h3>La Villa Cauris</h3>
+                <p>Chambres · Galerie · Équipements · Réservation WhatsApp directe, sans commission</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo__body">
+            <div class="demo__feature-tags">
+              <span class="demo__feature-tag">3 types de chambres</span>
+              <span class="demo__feature-tag">Galerie 6 photos</span>
+              <span class="demo__feature-tag">Équipements</span>
+              <span class="demo__feature-tag">Maps Fidjrossè</span>
+              <span class="demo__feature-tag">WhatsApp pré-rempli</span>
+            </div>
+
+            <a class="demo__url" href="https://hotel-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir hotel-demo-yvon.vercel.app">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              hotel-demo-yvon.vercel.app
+            </a>
+
+            <div class="demo__foot">
+              <div class="demo__foot-info">
+                <strong>Avantage :</strong> 0% Booking<br>
+                100% réservation directe
+              </div>
+              <a class="demo__btn" href="https://hotel-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir la démo hôtel dans un nouvel onglet">
+                Ouvrir la démo
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- HOTEL STRIP -->
+      <div class="hotel-strip" data-reveal style="--d:.15s">
+        <div>
+          <span class="hotel-strip__eyebrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 22v-6.57"/><path d="M12 11h.01"/><path d="M12 7h.01"/>
+              <path d="M14 15.43V22"/><path d="M15 16a5 5 0 0 0-6 0"/>
+              <path d="M16 11h.01"/><path d="M16 7h.01"/><path d="M8 11h.01"/><path d="M8 7h.01"/>
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+            </svg>
+            Aperçu des chambres
+          </span>
+          <div class="hotel-strip__rooms">
+            <div class="hotel-room">
+              <div class="hotel-room__name">Standard</div>
+              <div class="hotel-room__price">25 000 F</div>
+              <div class="hotel-room__unit">/ nuit</div>
+            </div>
+            <div class="hotel-room">
+              <div class="hotel-room__name">Confort</div>
+              <div class="hotel-room__price">40 000 F</div>
+              <div class="hotel-room__unit">/ nuit</div>
+            </div>
+            <div class="hotel-room">
+              <div class="hotel-room__name">Suite Cauris</div>
+              <div class="hotel-room__price">75 000 F</div>
+              <div class="hotel-room__unit">/ nuit</div>
+            </div>
+          </div>
+        </div>
+        <div class="hotel-strip__text">
+          Démo hôtel complète avec galerie, équipements (Wi-Fi fibre, piscine, parking, petit-déjeuner, climatisation), localisation Fidjrossè et CTA WhatsApp avec dates pré-remplies.
+          Le client choisit sa chambre, saisit ses dates dans la fiche, et la réservation arrive sur WhatsApp — sans intermédiaire.
+          <br><br>
+          Fichier HTML statique, hébergé sur <code>hotel-demo-yvon.vercel.app</code>.
+          <div class="hotel-strip__links">
+            <a class="hotel-strip__link" href="https://resto-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+              resto-demo-yvon.vercel.app
+            </a>
+            <a class="hotel-strip__link" href="https://hotel-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+              hotel-demo-yvon.vercel.app
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- OFFRES -->
+  <section class="section section--tight" id="offres">
+    <div class="wrap">
+      <div class="section__head" data-reveal>
+        <div>
+          <span class="eyebrow" style="color:var(--terra)">Offres claires</span>
+          <h2 class="section__title">Prix Cotonou, une fois.<br>Pas d'abonnement caché.</h2>
+        </div>
+        <span class="process__badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+          </svg>
+          Livraison 48h · Paiement unique
+        </span>
+      </div>
+
+      <div class="pricing">
+
+        <!-- Essentiel -->
+        <article class="price-card" data-reveal>
+          <div class="price-card__head">
+            <span class="price-card__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8"/>
+                <path d="M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7"/>
+              </svg>
+            </span>
+            <span class="price-card__badge price-card__badge--grey">Sans BDD</span>
+          </div>
+          <h3 class="price-card__title">Essentiel Restaurant</h3>
+          <div class="price-card__price">
+            <b>75 000 F</b>
+            <span>paiement unique</span>
+          </div>
+          <ul class="price-card__list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Site + menu digital</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> QR code table / vitrine</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Commande WhatsApp directe</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Hébergement Vercel inclus</li>
+            <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Sans panier (commande à la carte)</li>
+          </ul>
+          <div class="price-card__cta">
+            <a class="btn btn--primary btn--block" id="waEssentiel" href="#" target="_blank" rel="noopener noreferrer">
+              Choisir Essentiel
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Pro (featured) -->
+        <article class="price-card price-card--featured" data-reveal style="--d:.1s">
+          <div class="price-card__head">
+            <span class="price-card__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                <path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            </span>
+            <span class="price-card__badge price-card__badge--gold">Populaire</span>
+          </div>
+          <h3 class="price-card__title">Pro Restaurant</h3>
+          <div class="price-card__price">
+            <b>125 000 F</b>
+            <span>paiement unique</span>
+          </div>
+          <ul class="price-card__list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Tout Essentiel +</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Panier FCFA avec quantités</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Dashboard Supabase</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Statuts : nouveau / prêt / livré</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Historique commandes</li>
+          </ul>
+          <div class="price-card__cta">
+            <a class="btn btn--gold btn--block" id="waPro" href="#" target="_blank" rel="noopener noreferrer">
+              Choisir Pro
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+              </svg>
+            </a>
+            <div style="margin-top:12px;text-align:center;font-size:11.5px;color:rgba(251,246,236,.6)">
+              + hébergement Vercel · Supabase gratuit inclus
+            </div>
+          </div>
+        </article>
+
+        <!-- Pack Hôtel -->
+        <article class="price-card" data-reveal style="--d:.2s">
+          <div class="price-card__head">
+            <span class="price-card__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M10 22v-6.57"/><path d="M12 11h.01"/><path d="M12 7h.01"/>
+                <path d="M14 15.43V22"/><path d="M15 16a5 5 0 0 0-6 0"/>
+                <path d="M16 11h.01"/><path d="M16 7h.01"/><path d="M8 11h.01"/><path d="M8 7h.01"/>
+                <rect x="4" y="2" width="16" height="20" rx="2"/>
+              </svg>
+            </span>
+            <span class="price-card__badge price-card__badge--terra">0% commission</span>
+          </div>
+          <h3 class="price-card__title">Pack Hôtel</h3>
+          <div class="price-card__price">
+            <b>150k – 200k F</b>
+          </div>
+          <ul class="price-card__list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Présentation + 3 types de chambres (25k / 40k / 75k)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Galerie 6 photos + équipements</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Réservation WhatsApp directe avec dates</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Google Maps Fidjrossè</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Sans BDD · HTML/CSS/JS + Vercel</li>
+          </ul>
+          <div class="price-card__cta">
+            <a class="btn btn--ghost btn--block" id="waHotel" href="#" target="_blank" rel="noopener noreferrer">
+              Choisir Pack Hôtel
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="note-strip" data-reveal style="--d:.25s">
+        <span class="note-strip__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>
+          </svg>
+        </span>
+        <p class="note-strip__text">
+          <strong>Note technique :</strong> Essentiel et Pack Hôtel sont 100% statiques — HTML/CSS/JS + Vercel. Aucun coût serveur mensuel pour votre client. Pro utilise Supabase gratuit (dashboard + statuts) sans frais tant que le stockage reste sous 500 Mo.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section section--tight" id="process">
+    <div class="wrap">
+      <div class="process" data-reveal>
+        <div class="process__head">
+          <h2>Comment ça marche<br>en 3 étapes.</h2>
+          <span class="process__badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16.5 12"/>
+            </svg>
+            Mise en ligne 48h
+          </span>
+        </div>
+
+        <div class="process__grid">
+
+          <div class="process__step">
+            <div class="process__step-top">
+              <span class="process__num">01</span>
+              <span class="process__ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8"/>
+                  <path d="M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7"/>
+                </svg>
+              </span>
+            </div>
+            <h4>Vous envoyez logo, menu ou photos</h4>
+            <p>Logo, liste des plats avec prix FCFA, 5 à 10 photos. Pour un hôtel : noms des chambres, tarifs, équipements, adresse.</p>
+          </div>
+
+          <div class="process__step">
+            <div class="process__step-top">
+              <span class="process__num">02</span>
+              <span class="process__ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>
+                </svg>
+              </span>
+            </div>
+            <h4>Mise en ligne en 48h</h4>
+            <p>Nous construisons le site statique, nous le déployons sur Vercel, et nous testons la commande (ou la réservation) WhatsApp sur votre téléphone.</p>
+          </div>
+
+          <div class="process__step">
+            <div class="process__step-top">
+              <span class="process__num">03</span>
+              <span class="process__ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/>
+                  <rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
+                  <path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/>
+                  <path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/>
+                  <path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/>
+                </svg>
+              </span>
+            </div>
+            <h4>Vous recevez le lien + le QR code</h4>
+            <p>Un lien Vercel prêt à partager, plus un QR code haute définition à imprimer pour vos tables, flyers et devanture. Support WhatsApp inclus.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+
+      <div>
+        <div class="footer__brand">
+          <span class="brand__mark">M</span>
+          <span class="footer__brand-name">Menu Digital &amp; Site Hôtel<br>Cotonou</span>
+        </div>
+        <p class="footer__tag">
+          Des solutions concrètes pour restaurateurs et hôteliers qui veulent encaisser sans commission. Site ultra-rapide, commande et réservation directes sur WhatsApp, hébergement gratuit.
+        </p>
+        <div class="footer__chips">
+          <span class="footer__chip">Basé à Cotonou</span>
+          <span class="footer__chip">Bénin · Togo · Côte d'Ivoire</span>
+          <span class="footer__chip footer__chip--forest">WhatsApp direct</span>
+        </div>
+
+        <div class="footer__demos">
+          <div class="footer__demos-k">Démos live · liens Vercel</div>
+          <div class="footer__demos-list">
+            <a class="footer__demo-row" href="https://resto-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span>resto-demo-yvon.vercel.app</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </a>
+            <a class="footer__demo-row" href="https://hotel-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span>hotel-demo-yvon.vercel.app</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__card">
+          <div class="footer__card-k">Contact direct</div>
+          <div class="footer__card-phone">+229 53 86 20 86</div>
+          <div class="footer__card-meta">Réponse moyenne &lt; 10 min · Devis gratuit</div>
+
+          <div class="footer__actions">
+            <a class="footer__action footer__action--primary" id="footerWaMenu" href="#" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+              </svg>
+              Menu QR
+            </a>
+            <a class="footer__action footer__action--ghost" id="footerWaHotel" href="#" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+              </svg>
+              Site Hôtel
+            </a>
+          </div>
+
+          <div class="footer__tokens">
+            Tokens : <code>--bg #FBF6EC</code> · <code>--terra #D2541E</code> · <code>--forest #123B2A</code> · <code>--gold #EBA93A</code><br>
+            Fonts : Fraunces + DM Sans · 100% statique quand c'est possible.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer__rule"></div>
+
+    <div class="footer__bottom">
+      <span>© 2025 Pack Digital Cotonou — Démo commerciale finale</span>
+      <a href="https://resto-demo-yvon.vercel.app" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Démo restaurant · Le Baobab Gourmand
+      </a>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta" id="mobileCta">
+  <a class="mobile-cta__btn" id="mobileCtaBtn" href="#" target="_blank" rel="noopener noreferrer">
+    Commander sur WhatsApp
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+    </svg>
+  </a>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   CONFIG
+============================================================ */
+const CONFIG = {
+  phone: '22953862086',
+  phoneDisplay: '+229 53 86 20 86',
+  restoUrl: 'https://resto-demo-yvon.vercel.app',
+  hotelUrl: 'https://hotel-demo-yvon.vercel.app'
+};
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+function waLink(message) {
+  return `https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(message)}`;
+}
+
+/* ============================================================
+   WIRE WHATSAPP LINKS
+============================================================ */
+function wireWa() {
+  const genericMsg = `Bonjour 👋, je veux un Menu Digital / Site Hôtel pour mon établissement à Cotonou. On peut discuter ?`;
+  const menuMsg = `Bonjour 👋, je veux le pack Menu QR pour mon restaurant à Cotonou. Pouvez-vous m'en dire plus ?`;
+  const hotelMsg = `Bonjour 👋, je veux un site hôtel type Villa Cauris pour mon établissement. Pouvez-vous m'en dire plus ?`;
+  const essentielMsg = `Bonjour, je veux l'offre Essentiel Restaurant 75 000 F (Menu QR).`;
+  const proMsg = `Bonjour, je veux l'offre Pro Restaurant 125 000 F (panier + Supabase).`;
+  const packHotelMsg = `Bonjour, je veux le Pack Hôtel 150–200 000 F (type Villa Cauris).`;
+
+  const map = {
+    '#headerWaBtn': genericMsg,
+    '#mobileWaBtn': genericMsg,
+    '#mobileCtaBtn': genericMsg,
+    '#waEssentiel': essentielMsg,
+    '#waPro': proMsg,
+    '#waHotel': packHotelMsg,
+    '#footerWaMenu': menuMsg,
+    '#footerWaHotel': hotelMsg
+  };
+
+  Object.entries(map).forEach(([sel, msg]) => {
+    const el = $(sel);
+    if (el) el.href = waLink(msg);
+  });
+}
+
+/* ============================================================
+   MOBILE MENU
+============================================================ */
+function openMenu() {
+  const m = $('#mobileMenu');
+  m.hidden = false;
+  requestAnimationFrame(() => m.classList.add('open'));
+  document.body.classList.add('no-scroll');
+  $('#burger').setAttribute('aria-expanded', 'true');
+}
+function closeMenu() {
+  const m = $('#mobileMenu');
+  m.classList.remove('open');
+  document.body.classList.remove('no-scroll');
+  $('#burger').setAttribute('aria-expanded', 'false');
+  setTimeout(() => { m.hidden = true; }, 350);
+}
+$('#burger').addEventListener('click', () => {
+  if ($('#mobileMenu').hidden) openMenu(); else closeMenu();
+});
+$$('#mobileMenu a[href^="#"]').forEach(a => {
+  a.addEventListener('click', () => closeMenu());
+});
+
+/* ============================================================
+   SCROLL
+============================================================ */
+const header = $('#header');
+const progressBar = $('#progressBar');
+const navLinks = $$('.nav__link');
+const sections = ['demos', 'offres', 'process']
+  .map(id => document.getElementById(id)).filter(Boolean);
+
+let ticking = false;
+function onScroll() {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    const y = window.scrollY;
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docH > 0 ? (y / docH) * 100 : 0;
+    progressBar.style.width = pct + '%';
+
+    header.classList.toggle('scrolled', y > 40);
+
+    let current = '';
+    const probe = window.innerHeight * 0.4;
+    sections.forEach(sec => {
+      const r = sec.getBoundingClientRect();
+      if (r.top <= probe && r.bottom > probe) current = sec.id;
+    });
+    navLinks.forEach(a => a.classList.toggle('active', a.dataset.nav === current));
+
+    const cta = $('#mobileCta');
+    if (cta) cta.classList.toggle('show', y > 500 && $('#mobileMenu').hidden);
+
+    ticking = false;
+  });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll);
+
+/* ============================================================
+   REVEAL
+============================================================ */
+let revealObserver;
+function observeReveals() {
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  }
+  $$('[data-reveal]:not(.in)').forEach(el => revealObserver.observe(el));
+}
+
+/* ============================================================
+   RIPPLE
+============================================================ */
+document.addEventListener('pointerdown', (e) => {
+  const btn = e.target.closest('.btn, .footer__action, .mobile-cta__btn, .demo__btn');
+  if (!btn) return;
+  const r = btn.getBoundingClientRect();
+  const size = Math.max(r.width, r.height);
+  const ripple = document.createElement('span');
+  ripple.className = 'ripple';
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = (e.clientX - r.left - size / 2) + 'px';
+  ripple.style.top = (e.clientY - r.top - size / 2) + 'px';
+  btn.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 700);
+});
+
+/* ============================================================
+   TOAST
+============================================================ */
+let toastTimer;
+function toast(msg, duration = 2800) {
+  const el = $('#toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), duration);
+}
+
+/* ============================================================
+   ESC CLOSE MOBILE MENU
+============================================================ */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !$('#mobileMenu').hidden) closeMenu();
+});
+
+/* ============================================================
+   INIT
+============================================================ */
+function init() {
+  wireWa();
+  observeReveals();
+  onScroll();
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(observeReveals);
+  }
+
+  // Toast de confirmation à l'ouverture d'une démo
+  $$('.demo__btn, .demo__url, .footer__demo-row, .hotel-strip__link').forEach(link => {
+    link.addEventListener('click', () => {
+      const href = link.getAttribute('href') || '';
+      if (href.includes('resto-demo')) toast('Ouverture de la démo restaurant…', 1800);
+      else if (href.includes('hotel-demo')) toast('Ouverture de la démo hôtel…', 1800);
+    });
+  });
+}
+
+init();
+</script>
+</body>
+</html>
